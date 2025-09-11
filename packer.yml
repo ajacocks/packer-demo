@@ -42,6 +42,7 @@
       ansible.builtin.unarchive:
         src: '{{ ansible_user_dir }}/packer-ansible.zip'
         dest: "{{ ansible_user_dir }}"
+        remote_src: true
 
     - name: Run Packer init
       ansible.builtin.command:
