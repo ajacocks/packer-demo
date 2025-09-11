@@ -5,6 +5,10 @@
 
   tasks:
 
+    - name: Install EPEL GPG keys for dnf
+      ansible.builtin.rpm_key:
+        key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-10
+
     - name: Enable EPEL on RHEL host
       become: true
       when: ansible_distribution == "RedHat"
@@ -33,7 +37,7 @@
         src: packer-ansible.zip
         dest: "{{ ansible_user_dir }}"
         mode: '0644'
-    
+
     - name: Extract Packer HCL
       ansible.builtin.unarchive:
         src: '{{ ansible_user_dir }}/packer-ansible.zip'
