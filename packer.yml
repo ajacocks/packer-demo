@@ -7,7 +7,7 @@
 
     - name: Enable EPEL on RHEL host
       become: true
-      when: ansible_distribution == "Red Hat Enterprise Linux"
+      when: ansible_distribution == "RedHat"
       ansible.builtin.package:
         name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
         state: present
@@ -27,3 +27,24 @@
       ansible.builtin.package:
         name: packer
         state: present
+
+    - name: Install Packer HCL to managed host
+      ansible.builtin.copy:
+        src: packer-ansible.zip
+        dest: "{{ ansible_user_dir }}"
+        mode: '0644'
+    
+    - name: Extract Packer HCL
+      ansible.builtin.unarchive:
+        src: '{{ ansible_user_dir }}/packer-ansible.zip'
+        dest: "{{ ansible_user_dir }}"
+
+    - name: Run Packer init
+      ansible.builtin.command:
+        chdir: '{{ ansible_user_dir }}/packer-ansible/'
+        cmd: packer init rhel-10.pkr.hcl
+
+    - name: Run Packer build
+      ansible.builtin.command:
+        chdir: '{{ ansible_user_dir }}/packer-ansible/'
+        cmd: packer build -on-error=abort rhel-10.pkr.hcl
