@@ -51,6 +51,11 @@
         chdir: '{{ ansible_user_dir }}/packer-ansible/'
         cmd: packer init rhel-10.pkr.hcl
 
+    - name: Run Packer validate
+      ansible.builtin.command:
+        chdir: '{{ ansible_user_dir }}/packer-ansible/'
+        cmd: packer validate rhel-10.pkr.hcl
+
     - name: Run Packer build
       ansible.builtin.command:
         chdir: '{{ ansible_user_dir }}/packer-ansible/'
