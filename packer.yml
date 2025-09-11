@@ -26,10 +26,12 @@
         gpgcheck: false
         enabled: true
 
-    - name: Install packer package
+    - name: Install required packages
       become: true
       ansible.builtin.package:
-        name: packer
+        name:
+          - packer
+          - unzip
         state: present
 
     - name: Install Packer HCL to managed host
