@@ -61,8 +61,8 @@
         chdir: '{{ ansible_user_dir }}/packer-ansible/'
         cmd: packer build -on-error=abort rhel-10.pkr.hcl
       environment:
-        HCP_CLIENT_ID: "1BJlOM2BvznFCccZ2QcFRhYU01z3twhd"
-        HCP_CLIENT_SECRET: "UwLCohlPWpHXbqBbyv0IE3bPVNOmIL2hZomKg6XkX7SBXkGjwCjvmZp0rVOOQG7z"
+        HCP_CLIENT_ID: "{{ hcp_client_id }}"
+        HCP_CLIENT_SECRET: "{{ hcp_client_secret }}"
         AWS_ACCESS_KEY_ID: "{{ aws_access_key }}"
         AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key }}"
         AWS_DEFAULT_REGION: "{{ aws_region }}"
